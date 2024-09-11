@@ -117,7 +117,8 @@ in
     # Command line arguments are in $ARGS, not $@
     # DO NOT BLOCK. For example, don't run: wineserver -w
     winAppRun = ''
-      wine "$WINEPREFIX/drive_c/Program Files/MoI 4.0 trial/MoI.exe" "$ARGS"
+      wine "$WINEPREFIX/drive_c/users/$USER/AppData/Local/Programs/VRoidStudio/1.29.2/VRoidStudio.exe" "$ARGS"
+
     '';
 
     # This code will run after winAppRun, but only for the first instance.
