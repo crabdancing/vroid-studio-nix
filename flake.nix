@@ -3,13 +3,12 @@
 
   inputs.erosanix.url = "github:emmanuelrosa/erosanix";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/master";
-  nix-gaming.url = "github:fufexan/nix-gaming";
+  inputs.nix-gaming.url = "github:fufexan/nix-gaming";
 
   outputs = {
     self,
     nixpkgs,
     erosanix,
-    nix-gaming,
     ...
   }: {
     packages.x86_64-linux = let
