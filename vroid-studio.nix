@@ -61,7 +61,7 @@ in
     fileMap = {
       "$HOME/.cache/${pname}" = "drive_c/${pname}/${pname}cache";
       "$HOME/Desktop" = "drive_c/Users/$USER";
-      "$HOME/.local/share/mkWindowsApp/${pname}/AppData" = "drive_c/users/nikoru/AppData";
+      "$HOME/.local/share/mkWindowsApp/${pname}/AppData" = "drive_c/users/$USER/AppData";
       "$HOME/Documents" = "drive_c/Users/$Documents";
     };
 
