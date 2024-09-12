@@ -9,6 +9,7 @@
   copyDesktopItems,
   copyDesktopIcons, # This comes with erosanix. It's a handy way to generate desktop icons.
   unzip,
+  system,
   self,
 }: let
   # The default settings used if user doesn't already have a settings file.
@@ -20,7 +21,8 @@
   txtReg = ./txt.reg;
 in
   mkWindowsApp rec {
-    inherit wine;
+    # inherit wine;
+    wine = self.inputs.nix-gaming.packages.${system}.wine-ge;
 
     pname = "vroid-studio";
     version = "1.29.2";
