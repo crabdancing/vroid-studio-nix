@@ -44,9 +44,10 @@
 
         # wine = wineWowPackages.full;
         wine = self.inputs.nix-gaming.packages.x86_64-linux.wine-ge.overrideAttrs {
-          monos = [
-            mono
-          ];
+          # monos = [
+          #   mono
+          # ];
+          build = "full";
         };
       };
     };
