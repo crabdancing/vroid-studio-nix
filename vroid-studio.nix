@@ -9,6 +9,7 @@
   copyDesktopItems,
   copyDesktopIcons, # This comes with erosanix. It's a handy way to generate desktop icons.
   unzip,
+  self,
 }: let
   # The default settings used if user doesn't already have a settings file.
   # Tabs are disabled because they lead to UI issues when using Wine.
