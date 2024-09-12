@@ -61,14 +61,17 @@ in
     fileMap = {
       # "$HOME/.config/${pname}/SumatraPDF-settings.txt" = "drive_c/${pname}/SumatraPDF-settings.txt";
       "$HOME/.cache/${pname}" = "drive_c/${pname}/${pname}cache";
+      "$HOME/Desktop" = "drive_c/Users/$USER";
+      "$HOME/.local/share/mkWindowsApp/${pname}/AppData" = "drive_c/users/nikoru/AppData";
+      "$HOME/Documents" = "drive_c/Users/$Documents";
     };
 
     # By default, `fileMap` is applied right before running the app and is cleaned up after the app terminates. If the following option is set to "true", then `fileMap` is also applied prior to `winAppInstall`. This is set to "false" by default.
     fileMapDuringAppInstall = false;
 
     # By default `mkWindowsApp` doesn't persist registry changes made during runtime. Therefore, if an app uses the registry then set this to "true". The registry files are saved to `$HOME/.local/share/mkWindowsApp/$pname/`.
-    # persistRegistry = false;
-    persistRegistry = true;
+    persistRegistry = false;
+    # persistRegistry = true;
 
     # By default mkWindowsApp creates ephemeral (temporary) WINEPREFIX(es).
     # Setting persistRuntimeLayer to true causes mkWindowsApp to retain the WINEPREFIX, for the short term.
@@ -121,7 +124,6 @@ in
     # DO NOT BLOCK. For example, don't run: wineserver -w
     winAppRun = ''
       wine "$WINEPREFIX/drive_c/users/$USER/AppData/Local/Programs/VRoidStudio/${version}/VRoidStudio.exe" "$ARGS"
-
     '';
 
     # This code will run after winAppRun, but only for the first instance.
