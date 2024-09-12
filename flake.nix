@@ -43,7 +43,7 @@
         inherit (erosanix.lib.x86_64-linux) mkWindowsApp makeDesktopIcon copyDesktopIcons;
 
         # wine = wineWowPackages.full;
-        wine = self.inputs.nix-gaming.packages.x86_64-linux.wine-ge.overrideAttrs {
+        wine = self.inputs.nix-gaming.packages.x86_64-linux.wine-ge.override {
           # monos = [
           #   mono
           # ];
