@@ -21,14 +21,14 @@
   txtReg = ./txt.reg;
 in
   mkWindowsApp rec {
-    # inherit wine;
-    wine = self.inputs.nix-gaming.packages.${system}.wine-ge;
+    inherit wine;
+    # wine = self.inputs.nix-gaming.packages.${system}.wine-ge;
 
     pname = "vroid-studio";
     version = "1.29.2";
 
     src = builtins.fetchurl {
-      url = "https://download.vroid.com/dist/EYKGmv7H1S/VRoidStudio-v1.29.2-win.exe";
+      url = "https://download.vroid.com/dist/EYKGmv7H1S/VRoidStudio-v${version}-win.exe";
       # sha256 = lib.fakeHash;
       sha256 = "sha256:17pqpb2zhv5zxf2f1mwhr1rqys3inmrwb2z1g1ixl2h53kvlcchc";
     };
@@ -120,7 +120,7 @@ in
     # Command line arguments are in $ARGS, not $@
     # DO NOT BLOCK. For example, don't run: wineserver -w
     winAppRun = ''
-      wine "$WINEPREFIX/drive_c/users/$USER/AppData/Local/Programs/VRoidStudio/1.29.2/VRoidStudio.exe" "$ARGS"
+      wine "$WINEPREFIX/drive_c/users/$USER/AppData/Local/Programs/VRoidStudio/${version}/VRoidStudio.exe" "$ARGS"
 
     '';
 
