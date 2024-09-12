@@ -61,8 +61,8 @@ in
     fileMap = {
       "$HOME/.cache/${pname}" = "drive_c/${pname}/${pname}cache";
       "$HOME/Desktop" = "drive_c/Users/$USER";
-      "$HOME/.local/share/mkWindowsApp/${pname}/AppData" = "drive_c/users/$USER/AppData";
-      "$HOME/Documents" = "drive_c/Users/$Documents";
+      "$HOME/.local/share/mkWindowsApp/${pname}/AppData" = "drive_c/Users/$USER/AppData";
+      "$HOME/Documents" = "drive_c/Users/$USER/Documents";
     };
 
     # By default, `fileMap` is applied right before running the app and is cleaned up after the app terminates. If the following option is set to "true", then `fileMap` is also applied prior to `winAppInstall`. This is set to "false" by default.
