@@ -18,23 +18,12 @@
       # note: upstream's wine versions of mono and gecko are not available in nixpkgs's exposed package collection
       # and are handled as internal derivations, as seen here:
       # https://github.com/NixOS/nixpkgs/blob/nixos-24.05/pkgs/applications/emulators/wine/base.nix#L196
-      # thus, we are copying them directly into our flake.
-      # gecko32 = pkgs.fetchurl rec {
-      #   version = "2.47.4";
-      #   url = "https://dl.winehq.org/wine/wine-gecko/${version}/wine-gecko-${version}-x86.msi";
-      #   hash = "sha256-Js7MR3BrCRkI9/gUvdsHTGG+uAYzGOnvxaf3iYV3k9Y=";
-      # };
-      # gecko64 = pkgs.fetchurl rec {
-      #   version = "2.47.4";
-      #   url = "https://dl.winehq.org/wine/wine-gecko/${version}/wine-gecko-${version}-x86_64.msi";
-      #   hash = "sha256-5ZC32YijLWqkzx2Ko6o9M3Zv3Uz0yJwtzCCV7LKNBm8=";
-      # };
-
-      mono = pkgs.fetchurl rec {
-        version = "8.1.0";
-        url = "https://dl.winehq.org/wine/wine-mono/${version}/wine-mono-${version}-x86.msi";
-        hash = "sha256-DtPsUzrvebLzEhVZMc97EIAAmsDFtMK8/rZ4rJSOCBA=";
-      };
+      # approach is based on what upstream (nix-gaming) is doing:
+      # https://github.com/fufexan/nix-gaming/blob/master/pkgs/wine/default.nix
+      # NOTE: the wine-mono version is pinned to our nixpkgs's wine/sources.nix version of wine-mono.
+      # As such, this MAY break if you bump nixpkgs depending on the circumstances.
+      # This may offer a hint if you are currently troubleshooting something.
+      sources = (import "${self.inputs.nixpkgs}/pkgs/applications/emulators/wine/sources.nix" {inherit pkgs;}).unstable;
     in {
       default = self.packages.x86_64-linux.vroid-studio;
 
@@ -44,10 +33,10 @@
 
         # wine = wineWowPackages.full;
         wine = self.inputs.nix-gaming.packages.x86_64-linux.wine-ge.override {
-          # monos = [
-          #   mono
-          # ];
-          build = "full";
+          monos = [
+            sources.mono
+          ];
+          # build = "full";
         };
       };
     };
