@@ -30,13 +30,10 @@
       vroid-studio = pkgs.callPackage ./vroid-studio.nix {
         inherit self;
         inherit (erosanix.lib.x86_64-linux) mkWindowsApp makeDesktopIcon copyDesktopIcons;
-
-        # wine = wineWowPackages.full;
         wine = self.inputs.nix-gaming.packages.x86_64-linux.wine-ge.override {
           monos = [
             sources.mono
           ];
-          # build = "full";
         };
       };
     };

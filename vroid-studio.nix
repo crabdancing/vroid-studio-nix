@@ -176,7 +176,7 @@ in
         exec = pname;
         icon = pname;
         desktopName = "VRoid Studio";
-        genericName = "3D CAD software";
+        genericName = "3D CAD software for making anime figures";
         categories = ["Graphics" "Viewer"];
       })
     ];
