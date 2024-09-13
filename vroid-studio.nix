@@ -11,6 +11,7 @@
   unzip,
   system,
   self,
+  forceConfig ? true,
 }: let
   # The default settings used if user doesn't already have a settings file.
   # Tabs are disabled because they lead to UI issues when using Wine.
@@ -53,16 +54,10 @@ in
     # for demonstration purposes.
     enableInstallNotification = true;
 
-    # `fileMap` can be used to set up automatic symlinks to files which need to be persisted.
-    # The attribute name is the source path and the value is the path within the $WINEPREFIX.
-    # But note that you must ommit $WINEPREFIX from the path.
-    # To figure out what needs to be persisted, take at look at $(dirname $WINEPREFIX)/upper,
-    # while the app is running.
+    # MAJOR GOTCHA: `users` directory is created as `Users` in Windows, but in wine is lower!
     fileMap = {
-      "$HOME/.cache/${pname}" = "drive_c/${pname}/${pname}cache";
-      "$HOME/Desktop" = "drive_c/Users/$USER";
-      "$HOME/.local/share/mkWindowsApp/${pname}/AppData" = "drive_c/Users/$USER/AppData";
-      "$HOME/Documents" = "drive_c/Users/$USER/Documents";
+      "$HOME/.local/share/${pname}/local-low" = "drive_c/users/$USER/AppData/LocalLow/pixiv/VRoid Studio";
+      # "$HOME/Documents" = "drive_c/Users/$USER/Documents";
     };
 
     # By default, `fileMap` is applied right before running the app and is cleaned up after the app terminates. If the following option is set to "true", then `fileMap` is also applied prior to `winAppInstall`. This is set to "false" by default.
@@ -70,7 +65,6 @@ in
 
     # By default `mkWindowsApp` doesn't persist registry changes made during runtime. Therefore, if an app uses the registry then set this to "true". The registry files are saved to `$HOME/.local/share/mkWindowsApp/$pname/`.
     persistRegistry = false;
-    # persistRegistry = true;
 
     # By default mkWindowsApp creates ephemeral (temporary) WINEPREFIX(es).
     # Setting persistRuntimeLayer to true causes mkWindowsApp to retain the WINEPREFIX, for the short term.
@@ -102,7 +96,8 @@ in
     # mkdir -p "$config_dir"
 
     winAppInstall = ''
-      $WINE ${src} /S
+      winetricks -q dxvk
+      $WINE ${src} /silent
       regedit ${txtReg}
     '';
     # cp -v -n "${defaultSettings}" "$config_dir/SumatraPDF-settings.txt"
@@ -122,6 +117,7 @@ in
     # Command line arguments are in $ARGS, not $@
     # DO NOT BLOCK. For example, don't run: wineserver -w
     winAppRun = ''
+      cp ${self + "/editoroption.xml"} "$WINEPREFIX/drive_c/users/nikoru/AppData/LocalLow/pixiv/VRoid Studio/preferences/editoroption.xml" -v
       wine "$WINEPREFIX/drive_c/users/$USER/AppData/Local/Programs/VRoidStudio/${version}/VRoidStudio.exe" "$ARGS"
     '';
 
