@@ -48,3 +48,7 @@ vroid-studio-nix.packages.x86_64-linux.baseVRStudio.override {
 ```
 
 This assumes you've already put the flake in your inputs.
+
+# Disclaimers & license
+
+This is not an official project, and is not supported or endorsed by pixiv. All copyrights & trademarks are the property of their respective owners. The code unique to this repo is GNU GPLv3.

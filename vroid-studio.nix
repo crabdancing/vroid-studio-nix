@@ -110,7 +110,7 @@ in
 
     desktopIcon = makeDesktopIcon {
       name = "vroid-studio";
-      src = ./vroid_studio.png;
+      src = ./assets/vroid-studio.png;
     };
 
     meta = with lib; {
