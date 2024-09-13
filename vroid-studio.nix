@@ -11,24 +11,32 @@
   unzip,
   system,
   self,
+  pkgs,
   editorConfig ? null,
   forceConfig ? false,
 }: let
   # This registry file sets winebrowser (xdg-open) as the default handler for
   # text files, instead of Wine's notepad.
   txtReg = ./txt.reg;
+  version = "1.29.2";
+  pname = "vroid-studio";
+
+  src = builtins.fetchurl {
+    url = "https://download.vroid.com/dist/EYKGmv7H1S/VRoidStudio-v${version}-win.exe";
+    sha256 = "sha256:17pqpb2zhv5zxf2f1mwhr1rqys3inmrwb2z1g1ixl2h53kvlcchc";
+  };
+  # iconConvTools = pkgs.callPackage (self.inputs.nixpkgs + "/pkgs/build-support/icon-conv-tools") {};
+  # icon = pkgs.runCommand "${pname}-icon" {} ''
+  #   echo ${iconConvTools}/bin/extractWinRscIconsToStdFreeDesktopDir.sh ${src} \
+  #     '[^\.]+\.exe_[0-9]+_[0-9]+_[0-9]+_[0-9]+_([0-9]+x[0-9]+)x[0-9]+\.png' \
+  #     '\1' \
+  #     '([^\.]+).+' \
+  #     ${pname} \
+  #     "$out"
+  # '';
 in
   mkWindowsApp rec {
-    inherit wine;
-
-    pname = "vroid-studio";
-    version = "1.29.2";
-
-    src = builtins.fetchurl {
-      url = "https://download.vroid.com/dist/EYKGmv7H1S/VRoidStudio-v${version}-win.exe";
-      # sha256 = lib.fakeHash;
-      sha256 = "sha256:17pqpb2zhv5zxf2f1mwhr1rqys3inmrwb2z1g1ixl2h53kvlcchc";
-    };
+    inherit wine src version pname;
 
     dontUnpack = true;
 
@@ -100,14 +108,10 @@ in
       })
     ];
 
-    # desktopIcon = makeDesktopIcon {
-    #   name = "vroid-studio";
-
-    #   src = fetchurl {
-    #     url = "";
-    #     sha256 = "sha256-c+B847cKvtp5ZUvpoJ7JvgKRH95gdTngS6jyBxkXBvA=";
-    #   };
-    # };
+    desktopIcon = makeDesktopIcon {
+      name = "vroid-studio";
+      src = ./vroid_studio.png;
+    };
 
     meta = with lib; {
       description = "VRoid Studio";
