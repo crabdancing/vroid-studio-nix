@@ -1,6 +1,6 @@
 # Status
 
-Working. No known problems found.
+Works almost perfectly. No problems that I can find.
 
 # How it works
 
@@ -15,7 +15,6 @@ Working. No known problems found.
 
 
 # How to use
-
 
 
 ### Initialize with defaults (which can be changed) via UI/imperative editing:
