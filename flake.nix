@@ -43,34 +43,34 @@
         ];
         # build = "full";
       };
-      vroid-studio = pkgs.callPackage ./vroid-studio.nix {
+      baseVRoidStudio = pkgs.callPackage ./vroid-studio.nix {
         inherit self;
         inherit (erosanix.lib.x86_64-linux) mkWindowsApp makeDesktopIcon copyDesktopIcons;
         inherit wine;
       };
     in {
-      default = vroid-studio;
+      default = baseVRoidStudio;
 
       # expose wine as package
       inherit wine;
 
-      inherit vroid-studio;
+      inherit baseVRoidStudio;
 
-      vroid-studio-conf = vroid-studio.override {
+      vroidStudio = baseVRoidStudio.override {
         editorConfig = ./editoroption.xml;
         forceConfig = false;
       };
-      vroid-studio-bigui = vroid-studio.override {
-        editorConfig = ./editoroption.xml;
+      vroidStudioBigUI = baseVRoidStudio.override {
+        editorConfig = ./editoroption-bigui.xml;
         forceConfig = true;
       };
     };
 
-    apps.x86_64-linux.vroid-studio = {
+    apps.x86_64-linux.vroidStudio = {
       type = "app";
-      program = "${self.packages.x86_64-linux.vroid-studio}/bin/vroid-studio";
+      program = "${self.packages.x86_64-linux.vroidStudio}/bin/vroid-studio";
     };
 
-    apps.x86_64-linux.default = self.apps.x86_64-linux.vroid-studio;
+    apps.x86_64-linux.default = self.apps.x86_64-linux.vroidStudio;
   };
 }
