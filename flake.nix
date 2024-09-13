@@ -37,23 +37,32 @@
         url = "https://dl.winehq.org/wine/wine-mono/${version}/wine-mono-${version}-x86.msi";
         hash = "sha256-DtPsUzrvebLzEhVZMc97EIAAmsDFtMK8/rZ4rJSOCBA=";
       };
-
       wine = self.inputs.nix-gaming.packages.x86_64-linux.wine-ge.override {
         monos = [
           mono
         ];
         # build = "full";
       };
-    in {
-      default = self.packages.x86_64-linux.vroid-studio;
-
-      inherit wine;
       vroid-studio = pkgs.callPackage ./vroid-studio.nix {
         inherit self;
         inherit (erosanix.lib.x86_64-linux) mkWindowsApp makeDesktopIcon copyDesktopIcons;
         inherit wine;
+      };
+    in {
+      default = vroid-studio;
 
-        # wine = wineWowPackages.full;
+      # expose wine as package
+      inherit wine;
+
+      inherit vroid-studio;
+
+      vroid-studio-conf = vroid-studio.override {
+        editorConfig = ./editoroption.xml;
+        forceConfig = false;
+      };
+      vroid-studio-bigui = vroid-studio.override {
+        editorConfig = ./editoroption.xml;
+        forceConfig = true;
       };
     };
 
