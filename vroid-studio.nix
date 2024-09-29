@@ -58,6 +58,8 @@ in
       ''
         winetricks -q dxvk
         $WINE ${src} /silent
+        regedit ${./use-theme-none.reg}
+        regedit ${./wine-breeze-dark.reg}
         regedit ${txtReg}
       ''
       + lib.optionalString (setDPI != null) ''
