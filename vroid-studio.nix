@@ -14,10 +14,17 @@
   pkgs,
   editorConfig ? null,
   forceConfig ? false,
+  setDPI ? null,
 }: let
   # This registry file sets winebrowser (xdg-open) as the default handler for
   # text files, instead of Wine's notepad.
   txtReg = ./txt.reg;
+
+  setDPIReg = pkgs.writeText "set-dpi-${toString setDPI}.reg" ''
+    Windows Registry Editor Version 5.00
+    [HKEY_LOCAL_MACHINE\System\CurrentControlSet\Hardware Profiles\Current\Software\Fonts]
+    "LogPixels"=dword:${toString setDPI}
+  '';
 in
   mkWindowsApp rec {
     version = "1.29.2";
@@ -47,11 +54,15 @@ in
 
     nativeBuildInputs = [unzip copyDesktopItems copyDesktopIcons];
 
-    winAppInstall = ''
-      winetricks -q dxvk
-      $WINE ${src} /silent
-      regedit ${txtReg}
-    '';
+    winAppInstall =
+      ''
+        winetricks -q dxvk
+        $WINE ${src} /silent
+        regedit ${txtReg}
+      ''
+      + lib.optionalString (setDPI != null) ''
+        regedit ${setDPIReg}
+      '';
     winAppPreRun = ''
     '';
 

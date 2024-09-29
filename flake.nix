@@ -41,8 +41,9 @@
         editorConfig = ./editoroption.xml;
         forceConfig = false;
       };
-      vroidStudioBigUI = baseVRoidStudio.override {
-        editorConfig = ./editoroption-bigui.xml;
+      vroidStudioBigDPI = baseVRoidStudio.override {
+        editorConfig = ./editoroption.xml;
+        setDPI = 90;
         forceConfig = true;
       };
     };
