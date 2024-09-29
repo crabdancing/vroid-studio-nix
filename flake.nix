@@ -1,5 +1,5 @@
 {
-  description = "A Nix flake for Vroid Studio";
+  description = "A Nix flake for VRoid Studio";
 
   inputs.erosanix.url = "github:emmanuelrosa/erosanix";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/master";
